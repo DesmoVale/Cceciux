@@ -179,36 +179,13 @@
     }
 
     function downloadGift() {
-      const messageBox = document.createElement('div');
-      messageBox.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        font-family: 'Inter', sans-serif;
-        font-size: 1.1em;
-        text-align: center;
-      `;
-      messageBox.innerHTML = `
-        <p>Presente a caminho! 🎁</p>
-        <p>Seu download para 'regalo.pdf' deve começar em breve.</p>
-        <button style="background-color: var(--primary-blue); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;" onclick="this.parentNode.remove()">Fechar</button>
-      `;
-      document.body.appendChild(messageBox);
-
-      const link = document.createElement('a');
-      link.href = 'regalo.pdf';
-      link.download = 'regalo.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+  const link = document.createElement('a');
+  link.href = 'regalo.pdf';
+  link.download = 'regalo.pdf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
     const emojis = ["💚", "💛", "💙", "🎉", "🎊", "🎈", "🌟", "🇧🇷", "✨", "💫"];
     setInterval(() => {
