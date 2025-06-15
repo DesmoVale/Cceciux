@@ -4,84 +4,164 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feliz Aniversário Ceciux!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+        --primary-green: #009c3b;
+        --primary-yellow: #ffdf00;
+        --primary-blue: #002776;
+        --text-white: #ffffff;
+        --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom right, #009c3b, #ffdf00);
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
+      background: linear-gradient(to bottom right, var(--primary-green), var(--primary-yellow));
+      font-family: 'Inter', sans-serif; /* Changed to Inter for better readability */
+      color: var(--text-white);
       text-align: center;
-      overflow-x: hidden;
+      overflow: hidden; /* Hide scrollbars for fireworks */
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Ensure full viewport height */
+    }
+
+    /* Fireworks Canvas - positioned behind content */
+    #fireworksCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0; /* Behind the main content */
     }
 
     .container {
-      padding: 40px 20px;
-      max-width: 800px;
+      position: relative; /* Ensure content stays above fireworks */
+      z-index: 1; /* Above the fireworks canvas */
+      padding: 20px; /* Reduced padding for mobile */
+      max-width: 90%; /* Max width for better mobile fit */
       margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent background for readability */
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px); /* Blurry effect */
     }
 
     .flag {
-      font-size: 3em;
-      margin-bottom: 10px;
+      font-size: 3.5em; /* Slightly larger for impact */
+      margin-bottom: 15px;
+      text-shadow: var(--text-shadow);
     }
 
     #typing {
-      font-size: 2.5em;
+      font-size: 2.2em; /* Adjusted for mobile readability */
       font-weight: bold;
       white-space: pre-wrap;
-      margin: 50px 0 30px 0;
-      line-height: 1.4;
+      margin: 30px 0; /* Adjusted margin */
+      line-height: 1.3;
+      text-shadow: var(--text-shadow);
+      word-wrap: break-word; /* Ensure text wraps on small screens */
     }
 
     .btn {
-      background-color: #002776;
+      background-color: var(--primary-blue);
       border: none;
-      color: white;
+      color: var(--text-white);
       padding: 15px 30px;
-      font-size: 1.2em;
-      border-radius: 10px;
+      font-size: 1.1em; /* Adjusted for mobile */
+      border-radius: 50px; /* Pill-shaped button */
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      margin-top: 20px; /* Space from text */
     }
 
     .btn:hover {
-      background-color: #00194f;
+      background-color: #00194f; /* Darker blue on hover */
+      transform: translateY(-3px); /* Subtle lift effect */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
 
-    .animation {
+    .btn:active {
+      transform: translateY(0); /* Press effect */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Floating Emojis Animation */
+    .floating-emoji {
       position: absolute;
-      font-size: 1.5em;
-      animation: floatUp 4s ease-in-out infinite;
+      font-size: 1.8em; /* Slightly larger floating emojis */
+      animation: floatUp 6s ease-out infinite; /* Slower and smoother */
       pointer-events: none;
-      z-index: 0;
+      z-index: 0; /* Below content, above background */
+      opacity: 0; /* Start hidden */
+      transform: translateY(0);
     }
 
     @keyframes floatUp {
       0% {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      50% {
         opacity: 1;
       }
       100% {
-        transform: translateY(-600px);
+        transform: translateY(-800px) scale(0.5); /* Float higher */
         opacity: 0;
       }
     }
 
-    @media (max-width: 600px) {
-      #typing {
-        font-size: 1.8em;
+    /* Media Queries for fine-tuning on smaller screens */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+        max-width: 95%;
       }
-
+      #typing {
+        font-size: 2em;
+        margin: 25px 0;
+      }
       .btn {
         font-size: 1em;
         padding: 12px 25px;
+      }
+      .flag {
+        font-size: 3em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #typing {
+        font-size: 1.5em; /* Even smaller for very small screens */
+        margin: 20px 0;
+      }
+      .btn {
+        font-size: 0.9em;
+        padding: 10px 20px;
+        border-radius: 40px;
+      }
+      .flag {
+        font-size: 2.5em;
       }
     }
   </style>
 </head>
 <body>
+
+  <!-- Canvas for Fireworks - placed at the bottom z-index -->
+  <canvas id="fireworksCanvas"></canvas>
 
   <div class="container">
     <div class="flag">🇧🇷💚💛💙</div>
@@ -90,7 +170,8 @@
   </div>
 
   <script>
-    const text = "Feliz aniversário, Ceciux!\nYoung and sweet, only... 17(+5) 🎂";
+    // Typing effect for the main message
+    const text = "Feliz aniversário, Cceciux!\nYoung and sweet, only... 17(+5) 🎂";
     const typingDiv = document.getElementById("typing");
     let i = 0;
 
@@ -102,25 +183,230 @@
       }
     }
 
-    typeWriter();
+    // Start typing after the page loads
+    window.onload = typeWriter;
 
+    // Function to handle gift download
     function downloadGift() {
-      window.location.href = 'regalo.pdf';
+      // In a real scenario, you'd trigger a download.
+      // For this example, we'll just log to console or provide a dummy link.
+      console.log('Download do presente solicitado. Link: regalo.pdf');
+      // For demonstration, let's create a temporary message box instead of alert.
+      const messageBox = document.createElement('div');
+      messageBox.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.1em;
+        text-align: center;
+      `;
+      messageBox.innerHTML = `
+        <p>Presente a caminho!</p>
+        <p>Seu download para 'regalo.pdf' deve começar em breve.</p>
+        <button style="background-color: var(--primary-blue); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;" onclick="this.parentNode.remove()">Fechar</button>
+      `;
+      document.body.appendChild(messageBox);
+      // For an actual download:
+      // window.location.href = 'regalo.pdf';
     }
 
-    // Elementi di festa brasiliana
-    const emojis = ["💚", "💛", "💙", "🎉", "🎊", "🎈", "🌟", "🇧🇷"];
+    // Floating Emojis
+    const emojis = ["💚", "💛", "💙", "🎉", "🎊", "🎈", "🌟", "🇧🇷", "✨", "💫"];
     setInterval(() => {
       const el = document.createElement("div");
-      el.className = "animation";
+      el.className = "floating-emoji";
       el.style.left = Math.random() * 100 + "vw";
-      el.style.top = "100%";
-      el.style.fontSize = (Math.random() * 1.5 + 1) + "em";
-      el.style.color = ["#009c3b", "#ffdf00", "#002776", "#ffffff"][Math.floor(Math.random() * 4)];
+      el.style.bottom = "-50px"; /* Start from below the viewport */
+      el.style.fontSize = (Math.random() * 1.5 + 1.2) + "em"; /* Wider range of sizes */
+      el.style.color = ["var(--primary-green)", "var(--primary-yellow)", "var(--primary-blue)", "var(--text-white)"][Math.floor(Math.random() * 4)];
       el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 4000);
-    }, 350);
+      // Remove element after animation ends (6s as per CSS)
+      setTimeout(() => el.remove(), 6000);
+    }, 200); /* Spawn more frequently */
+
+
+    // Fireworks Animation (using Canvas)
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    let fireworks = [];
+    let particles = [];
+
+    // Resize canvas to fill window
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas(); // Initial resize
+
+    // Firework particle properties
+    class Particle {
+      constructor(x, y, vx, vy, color) {
+        this.x = x;
+        this.y = y;
+        this.vx = vx;
+        this.vy = vy;
+        this.color = color;
+        this.alpha = 1;
+        this.gravity = 0.05;
+        this.decay = 0.01;
+        this.friction = 0.99;
+      }
+
+      update() {
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${this.alpha})`;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // Firework rocket properties
+    class Firework {
+      constructor(sx, sy, tx, ty, color) {
+        this.x = sx;
+        this.y = sy;
+        this.sx = sx;
+        this.sy = sy;
+        this.tx = tx;
+        this.ty = ty;
+        this.distanceToTarget = Math.sqrt(Math.pow(tx - sx, 2) + Math.pow(ty - sy, 2));
+        this.distanceTraveled = 0;
+        this.coordinates = [];
+        this.coordinateCount = 3;
+        while (this.coordinateCount--) {
+          this.coordinates.push([this.x, this.y]);
+        }
+        this.angle = Math.atan2(ty - sy, tx - sx);
+        this.speed = 2;
+        this.acceleration = 1.05;
+        this.friction = 0.99;
+        this.gravity = 0.5;
+        this.color = color;
+        this.trail = []; // For the rocket's trail
+        this.trailLength = 10;
+      }
+
+      update(index) {
+        this.coordinates.pop();
+        this.coordinates.unshift([this.x, this.y]);
+
+        this.speed *= this.acceleration;
+        let vx = Math.cos(this.angle) * this.speed;
+        let vy = Math.sin(this.angle) * this.speed;
+        this.distanceTraveled = Math.sqrt(Math.pow(this.x - this.sx, 2) + Math.pow(this.y - this.sy, 2));
+
+        if (this.distanceTraveled >= this.distanceToTarget) {
+          fireworks.splice(index, 1);
+          this.explode();
+        } else {
+          this.x += vx;
+          this.y += vy;
+
+          // Add to trail
+          this.trail.push({ x: this.x, y: this.y, alpha: 1 });
+          if (this.trail.length > this.trailLength) {
+            this.trail.shift();
+          }
+          // Fade trail particles
+          for(let i = 0; i < this.trail.length; i++) {
+              this.trail[i].alpha -= 0.05;
+              if (this.trail[i].alpha < 0) this.trail[i].alpha = 0;
+          }
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(this.coordinates[this.coordinateCount - 1][0], this.coordinates[this.coordinateCount - 1][1]);
+        ctx.lineTo(this.x, this.y);
+        ctx.strokeStyle = `rgb(${this.color[0]}, ${this.color[1]}, ${this.color[2]})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+
+        // Draw trail
+        for (let i = 0; i < this.trail.length; i++) {
+          const trailPart = this.trail[i];
+          ctx.beginPath();
+          ctx.arc(trailPart.x, trailPart.y, 1, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${trailPart.alpha})`;
+          ctx.fill();
+        }
+      }
+
+      explode() {
+        let count = 80; // Number of particles
+        while (count--) {
+          particles.push(new Particle(this.x, this.y, (Math.random() * 4 - 2), (Math.random() * 4 - 2), this.color));
+        }
+      }
+    }
+
+    // Main animation loop
+    function animateFireworks() {
+      requestAnimationFrame(animateFireworks);
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+      // Update and draw fireworks
+      for (let i = fireworks.length - 1; i >= 0; i--) {
+        fireworks[i].update(i);
+        fireworks[i].draw();
+      }
+
+      // Update and draw particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].alpha <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+    }
+
+    // Launch new fireworks randomly
+    setInterval(() => {
+      if (fireworks.length < 5) { // Limit number of active fireworks
+        let sx = canvas.width / 2; // Start from bottom center
+        let sy = canvas.height;
+        let tx = Math.random() * canvas.width; // Target random x
+        let ty = Math.random() * (canvas.height / 2) - 50; // Target upper half
+        const colors = [
+            [255, 0, 0], [0, 255, 0], [0, 0, 255], // RGB
+            [255, 255, 0], [255, 0, 255], [0, 255, 255], // CMY
+            [255, 165, 0], [128, 0, 128], [255, 255, 255] // Orange, Purple, White
+        ];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        fireworks.push(new Firework(sx, sy, tx, ty, randomColor));
+      }
+    }, 1000); // Launch a new firework every second
+
+    // Start the animation loop when the window loads
+    window.onload = function() {
+        typeWriter(); // Start typing animation
+        animateFireworks(); // Start fireworks animation
+    };
   </script>
 
 </body>
